@@ -21,9 +21,6 @@ client.on('message', message => {
                             reason: `Global ban requested by ${message.author.tag}`
                         })
                         .then(() => {
-                            if (!(message.author.dmChannel)) {
-                                message.author.createDM();
-                            }
                             message.author.send(`Successfully banned ${user.tag} from ${server.name}`);
                             console.log(`Banned ${user.tag} from ${server.name} at the request of ${message.author.tag}`);
                         })
