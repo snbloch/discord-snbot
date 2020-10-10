@@ -18,6 +18,7 @@ client.on('message', message => {
                     member = server.member(user);
                     if (member) {
                         member.ban({
+                            days: 1,
                             reason: `Global ban requested by ${message.author.tag}`
                         })
                         .then(() => {
