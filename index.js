@@ -32,10 +32,14 @@ client.on('message', message => {
                             message.author.send(`I was unable to ban the member from ${server.name}, make sure I have the correct role permissions.`);
                             console.error(err);
                         });    
+                    } else {
+                        console.log(`${user} is not a member of server ${server.name}`);
                     }
                 } else {
-                    message.author.send('You didn\'t @mention the user to ban.');
+                    message.author.send(`You didn't @mention the user to ban.`);
                 }
+            } else {
+                console.log(`${message.author.tag} does not have permission to ban members on server ${server.name}`);
             }
         });
     }
@@ -60,10 +64,14 @@ client.on('message', message => {
                             message.author.send(`I was unable to kick the member from ${server.name}, make sure I have the correct role permissions.`);
                             console.error(err);
                         });    
+                    } else {
+                        console.log(`${user} is not a member of server ${server.name}`);
                     }
                 } else {
-                    message.author.send('You didn\'t @mention the user to kick.');
+                    message.author.send(`You didn't @mention the user to kick.`);
                 }
+            } else {
+                console.log(`${message.author.tag} does not have permission to ban members on server ${server.name}`);
             }
         });
     }
