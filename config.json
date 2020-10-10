@@ -1,15 +1,18 @@
 {
     "servers": [ 
         {
-            "your-server-id": {
-                "alias": "friendly-name",
-                "auto-react-enabled": true,
-                "auto-react-percentage": 2,
-                "auto-react-emojis": [
-                    "emojiname1",
-                    "emojiname2"
-                ]
-            }
+            "id": "your-server-id",
+            "alias": "friendly-name",
+            "autoReactEnabled": true,
+            "autoReactPercentage": 2,
+            "autoReactChannels": [
+                "channelname1",
+                "channelname2"
+            ],
+            "autoReactEmojis": [
+                "emojiname1",
+                "emojiname2"
+            ]
         }
     ],
     "token": "your-bot-user-token"

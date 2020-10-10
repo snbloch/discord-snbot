@@ -2,6 +2,11 @@ const Discord = require('discord.js');
 const config = require('./config.json');
 const client = new Discord.Client();
 
+let configuredServers = [];
+config.servers.forEach(server => {
+    configuredServers.push(server.id);
+});
+
 client.once('ready', () => {
     client.guilds.cache.forEach(server => {
         console.log(`Connected to server ${server.name} with id ${server.id}`);
@@ -74,6 +79,38 @@ client.on('message', message => {
                 console.log(`${message.author.tag} does not have permission to ban members on server ${server.name}`);
             }
         });
+    }
+    else if (configuredServers.indexOf(message.guild.id) != -1) {
+        serverConfig = {};
+        for (let i = 0; i < config.servers.length; i++) {
+            if (config.servers[i].id === message.guild.id) {
+                serverConfig.id = config.servers[i].id;
+                serverConfig.alias = config.servers[i].alias;
+                serverConfig.autoReactEnabled = config.servers[i].autoReactEnabled;
+                serverConfig.autoReactPercentage = config.servers[i].autoReactPercentage;
+                serverConfig.autoReactChannels = config.servers[i].autoReactChannels;
+                serverConfig.autoReactEmojis = config.servers[i].autoReactEmojis;
+                break;
+            }
+        }
+        if (serverConfig.autoReactEnabled && serverConfig.autoReactPercentage && serverConfig.autoReactChannels && (serverConfig.autoReactChannels.indexOf(message.channel.name) != -1) && serverConfig.autoReactEmojis) {
+            let emojis = [];
+            for (let i = 0; i < message.guild.emojis.cache.length; i++) {
+                if (serverConfig.autoReactEmojis.indexOf(message.guild.emojis.cache[i].name) != -1) {
+                    emojis.push(message.guild.emojis.cache[i].id);
+                }
+            }
+            if (Math.floor(Math.random() * 100) < serverConfig.autoReactPercentage) {
+                let emoji = message.guild.emojis.resolve(emojis[Math.floor(Math.random() * emojis.length)].id);
+                message.react(emoji)
+                .then(() => {
+                    console.log(`Reacted to message ${message.id} with emoji ${emoji.name}`);
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+            }
+        }
     }
 });
 
