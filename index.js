@@ -3,6 +3,9 @@ const config = require('./config.json');
 const client = new Discord.Client();
 
 client.once('ready', () => {
+    client.guilds.cache.forEach(server => {
+        console.log(`Connected to server ${server.name} with id ${server.id}`);
+    });
     console.log('Ready!');
 });
 
