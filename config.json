@@ -12,7 +12,9 @@
             "autoReactEmojis": [
                 "emojiname1",
                 "emojiname2"
-            ]
+            ],
+            "globalBanReply": "Message to send in response to global ban",
+            "globalKickReply": "Message to send in response to global kick"
         }
     ],
     "token": "your-bot-user-token"

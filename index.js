@@ -21,6 +21,17 @@ client.on('message', message => {
     if (message.content.startsWith('!gb ')) {
         client.guilds.cache.forEach(server => {
             if (server.member(message.author).permissions.any(['ADMINISTRATOR', 'BAN_MEMBERS'])) {
+                if (configuredServers.indexOf(message.guild.id) != -1) {
+                    let serverConfig = {};
+                    for (let i = 0; i < config.servers.length; i++) {
+                        if (config.servers[i].id === message.guild.id) {
+                            serverConfig.id = config.servers[i].id;
+                            serverConfig.alias = config.servers[i].alias;
+                            serverConfig.globalBanReply = config.servers[i].globalBanReply;
+                            break;
+                        }
+                    }
+                }
                 user = message.mentions.users.first();
                 if (user) {
                     member = server.member(user);
@@ -32,6 +43,9 @@ client.on('message', message => {
                         .then(() => {
                             message.author.send(`Successfully banned ${user.tag} from ${server.name}`);
                             console.log(`Banned ${user.tag} from ${server.name} at the request of ${message.author.tag}`);
+                            if (serverConfig.globalBanReply) {
+                                message.reply(serverConfig.globalBanReply);
+                            }
                         })
                         .catch(err => {
                             message.author.send(`I was unable to ban the member from ${server.name}, make sure I have the correct role permissions.`);
@@ -51,6 +65,17 @@ client.on('message', message => {
     else if (message.content.startsWith('!gk ')) {
         client.guilds.cache.forEach(server => {
             if (server.member(message.author).permissions.any(['ADMINISTRATOR', 'KICK_MEMBERS'])) {
+                if (configuredServers.indexOf(message.guild.id) != -1) {
+                    let serverConfig = {};
+                    for (let i = 0; i < config.servers.length; i++) {
+                        if (config.servers[i].id === message.guild.id) {
+                            serverConfig.id = config.servers[i].id;
+                            serverConfig.alias = config.servers[i].alias;
+                            serverConfig.globalKickReply = config.servers[i].globalKickReply;
+                            break;
+                        }
+                    }
+                }
                 user = message.mentions.users.first();
                 if (user) {
                     member = server.member(user);
@@ -61,6 +86,9 @@ client.on('message', message => {
                         .then(() => {
                             message.author.send(`Successfully kicked ${user.tag} from ${server.name}`);
                             console.log(`Kicked ${user.tag} from ${server.name} at the request of ${message.author.tag}`);
+                            if (serverConfig.globalKickReply) {
+                                message.reply(serverConfig.globalKickReply);
+                            }
                         })
                         .catch(err => {
                             message.author.send(`I was unable to kick the member from ${server.name}, make sure I have the correct role permissions.`);
@@ -78,7 +106,7 @@ client.on('message', message => {
         });
     }
     else if (configuredServers.indexOf(message.guild.id) != -1) {
-        serverConfig = {};
+        let serverConfig = {};
         for (let i = 0; i < config.servers.length; i++) {
             if (config.servers[i].id === message.guild.id) {
                 serverConfig.id = config.servers[i].id;
