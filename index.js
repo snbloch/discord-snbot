@@ -15,12 +15,12 @@ client.once('ready', () => {
 });
 
 client.on('message', message => {
+    let serverConfig = {};
     if (!message || !message.content || !message.author || !message.guild) {
         return;
     }
     if (message.content.startsWith('!gb ')) {
         if (configuredServers.indexOf(message.guild.id) != -1) {
-            let serverConfig = {};
             for (let i = 0; i < config.servers.length; i++) {
                 if (config.servers[i].id === message.guild.id) {
                     serverConfig.id = config.servers[i].id;
@@ -64,7 +64,6 @@ client.on('message', message => {
     }
     else if (message.content.startsWith('!gk ')) {
         if (configuredServers.indexOf(message.guild.id) != -1) {
-            let serverConfig = {};
             for (let i = 0; i < config.servers.length; i++) {
                 if (config.servers[i].id === message.guild.id) {
                     serverConfig.id = config.servers[i].id;
@@ -106,7 +105,6 @@ client.on('message', message => {
         });
     }
     else if (configuredServers.indexOf(message.guild.id) != -1) {
-        let serverConfig = {};
         for (let i = 0; i < config.servers.length; i++) {
             if (config.servers[i].id === message.guild.id) {
                 serverConfig.id = config.servers[i].id;
