@@ -19,9 +19,6 @@ client.on('message', message => {
         return;
     }
     if (message.content.startsWith('!gb ')) {
-        if (!(message.author.dmChannel)) {
-            message.author.createDM();
-        }
         client.guilds.cache.forEach(server => {
             if (server.member(message.author).permissions.any(['ADMINISTRATOR', 'BAN_MEMBERS'])) {
                 user = message.mentions.users.first();
@@ -33,18 +30,18 @@ client.on('message', message => {
                             reason: `Global ban requested by ${message.author.tag}`
                         })
                         .then(() => {
-                            message.author.dmChannel.send(`Successfully banned ${user.tag} from ${server.name}`);
+                            message.author.send(`Successfully banned ${user.tag} from ${server.name}`);
                             console.log(`Banned ${user.tag} from ${server.name} at the request of ${message.author.tag}`);
                         })
                         .catch(err => {
-                            message.author.dmChannel.send(`I was unable to ban the member from ${server.name}, make sure I have the correct role permissions.`);
+                            message.author.send(`I was unable to ban the member from ${server.name}, make sure I have the correct role permissions.`);
                             console.error(err);
                         });    
                     } else {
                         console.log(`${user} is not a member of server ${server.name}`);
                     }
                 } else {
-                    message.author.dmChannel.send(`You didn't @mention the user to ban.`);
+                    message.author.send(`You didn't @mention the user to ban.`);
                 }
             } else {
                 console.log(`${message.author.tag} does not have permission to ban members on server ${server.name}`);
@@ -52,9 +49,6 @@ client.on('message', message => {
         });
     }
     else if (message.content.startsWith('!gk ')) {
-        if (!(message.author.dmChannel)) {
-            message.author.createDM();
-        }
         client.guilds.cache.forEach(server => {
             if (server.member(message.author).permissions.any(['ADMINISTRATOR', 'KICK_MEMBERS'])) {
                 user = message.mentions.users.first();
@@ -65,18 +59,18 @@ client.on('message', message => {
                             reason: `Global kick requested by ${message.author.tag}`
                         })
                         .then(() => {
-                            message.author.dmChannel.send(`Successfully kicked ${user.tag} from ${server.name}`);
+                            message.author.send(`Successfully kicked ${user.tag} from ${server.name}`);
                             console.log(`Kicked ${user.tag} from ${server.name} at the request of ${message.author.tag}`);
                         })
                         .catch(err => {
-                            message.author.dmChannel.send(`I was unable to kick the member from ${server.name}, make sure I have the correct role permissions.`);
+                            message.author.send(`I was unable to kick the member from ${server.name}, make sure I have the correct role permissions.`);
                             console.error(err);
                         });    
                     } else {
                         console.log(`${user} is not a member of server ${server.name}`);
                     }
                 } else {
-                    message.author.dmChannel.send(`You didn't @mention the user to kick.`);
+                    message.author.send(`You didn't @mention the user to kick.`);
                 }
             } else {
                 console.log(`${message.author.tag} does not have permission to ban members on server ${server.name}`);
