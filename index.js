@@ -15,6 +15,9 @@ client.once('ready', () => {
 });
 
 client.on('message', message => {
+    if (!message || !message.content || !message.author || !message.guild) {
+        return;
+    }
     if (message.content.startsWith('!gb ')) {
         if (!(message.author.dmChannel)) {
             message.author.createDM();
