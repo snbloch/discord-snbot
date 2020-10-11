@@ -95,7 +95,7 @@ client.on('message', message => {
         }
         if (serverConfig.autoReactEnabled && serverConfig.autoReactPercentage && serverConfig.autoReactChannels && (serverConfig.autoReactChannels.indexOf(message.channel.name) != -1) && serverConfig.autoReactEmojis) {
             let emojis = [];
-            client.emojis.cache.forEach(emoji => {
+            message.guild.emojis.cache.forEach(emoji => {
                 if (serverConfig.autoReactEmojis.indexOf(emoji.name) != -1) {
                     emojis.push(emoji);
                 }
