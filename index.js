@@ -19,19 +19,19 @@ client.on('message', message => {
         return;
     }
     if (message.content.startsWith('!gb ')) {
+        if (configuredServers.indexOf(message.guild.id) != -1) {
+            let serverConfig = {};
+            for (let i = 0; i < config.servers.length; i++) {
+                if (config.servers[i].id === message.guild.id) {
+                    serverConfig.id = config.servers[i].id;
+                    serverConfig.alias = config.servers[i].alias;
+                    serverConfig.globalBanReply = config.servers[i].globalBanReply;
+                    break;
+                }
+            }
+        }
         client.guilds.cache.forEach(server => {
             if (server.member(message.author).permissions.any(['ADMINISTRATOR', 'BAN_MEMBERS'])) {
-                if (configuredServers.indexOf(message.guild.id) != -1) {
-                    let serverConfig = {};
-                    for (let i = 0; i < config.servers.length; i++) {
-                        if (config.servers[i].id === message.guild.id) {
-                            serverConfig.id = config.servers[i].id;
-                            serverConfig.alias = config.servers[i].alias;
-                            serverConfig.globalBanReply = config.servers[i].globalBanReply;
-                            break;
-                        }
-                    }
-                }
                 user = message.mentions.users.first();
                 if (user) {
                     member = server.member(user);
@@ -63,19 +63,19 @@ client.on('message', message => {
         });
     }
     else if (message.content.startsWith('!gk ')) {
+        if (configuredServers.indexOf(message.guild.id) != -1) {
+            let serverConfig = {};
+            for (let i = 0; i < config.servers.length; i++) {
+                if (config.servers[i].id === message.guild.id) {
+                    serverConfig.id = config.servers[i].id;
+                    serverConfig.alias = config.servers[i].alias;
+                    serverConfig.globalKickReply = config.servers[i].globalKickReply;
+                    break;
+                }
+            }
+        }
         client.guilds.cache.forEach(server => {
             if (server.member(message.author).permissions.any(['ADMINISTRATOR', 'KICK_MEMBERS'])) {
-                if (configuredServers.indexOf(message.guild.id) != -1) {
-                    let serverConfig = {};
-                    for (let i = 0; i < config.servers.length; i++) {
-                        if (config.servers[i].id === message.guild.id) {
-                            serverConfig.id = config.servers[i].id;
-                            serverConfig.alias = config.servers[i].alias;
-                            serverConfig.globalKickReply = config.servers[i].globalKickReply;
-                            break;
-                        }
-                    }
-                }
                 user = message.mentions.users.first();
                 if (user) {
                     member = server.member(user);
