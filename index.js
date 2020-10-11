@@ -23,7 +23,7 @@ client.on('message', message => {
             message.author.createDM();
         }
         client.guilds.cache.forEach(server => {
-            if (server.member(message.author).roles.highest.permissions.any(['ADMINISTRATOR', 'BAN_MEMBERS'])) {
+            if (server.member(message.author).permissions.any(['ADMINISTRATOR', 'BAN_MEMBERS'])) {
                 user = message.mentions.users.first();
                 if (user) {
                     member = server.member(user);
@@ -56,7 +56,7 @@ client.on('message', message => {
             message.author.createDM();
         }
         client.guilds.cache.forEach(server => {
-            if (server.member(message.author).roles.highest.permissions.any(['ADMINISTRATOR', 'KICK_MEMBERS'])) {
+            if (server.member(message.author).permissions.any(['ADMINISTRATOR', 'KICK_MEMBERS'])) {
                 user = message.mentions.users.first();
                 if (user) {
                     member = server.member(user);
