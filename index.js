@@ -117,14 +117,14 @@ client.on('message', message => {
             }
         }
         if (serverConfig.autoReactEnabled && serverConfig.autoReactPercentage && serverConfig.autoReactChannels && (serverConfig.autoReactChannels.indexOf(message.channel.name) != -1) && serverConfig.autoReactEmojis) {
-            if (Math.floor(Math.random() * 100) < serverConfig.autoReactPercentage) {
+            if (Math.floor(Math.random() * Math.floor(100)) < serverConfig.autoReactPercentage) {
                 let emojis = [];
                 message.guild.emojis.cache.forEach(emoji => {
                     if (serverConfig.autoReactEmojis.indexOf(emoji.name) != -1) {
                         emojis.push(emoji);
                     }
                 });
-                let emoji = emojis[Math.floor(Math.random() * emojis.length)];
+                let emoji = emojis[Math.floor(Math.random() * Math.floor(emojis.length))];
                 message.react(emoji)
                 .then(() => {
                     console.log(`Reacted to message ${message.id} with emoji ${emoji.name}`);
