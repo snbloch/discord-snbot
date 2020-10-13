@@ -20,7 +20,6 @@ client.on('message', message => {
         return;
     }
     if (message.content.startsWith('!gb ')) {
-        let messageOnBan = false;
         let banMessage;
         if (configuredServers.indexOf(message.guild.id) != -1) {
             for (let i = 0; i < config.servers.length; i++) {
@@ -43,8 +42,7 @@ client.on('message', message => {
                             reason: `Global ban requested by ${message.author.tag}`
                         })
                         .then(() => {
-                            if (serverConfig.globalBanReply && !messageOnBan && !banMessage) {
-                                messageOnBan = true;
+                            if (serverConfig.globalBanReply && !banMessage) {
                                 banMessage = serverConfig.globalBanReply;
                             }
                             message.author.send(`Successfully banned ${user.tag} from ${server.name}`);
@@ -64,13 +62,12 @@ client.on('message', message => {
                 console.log(`${message.author.tag} does not have permission to ban members on server ${server.name}`);
             }
         });
-        if (messageOnBan && banMessage) { 
+        if (banMessage) { 
             message.mentions.users.first().send(banMessage);
         }
         message.delete();
     }
     else if (message.content.startsWith('!gk ')) {
-        let messageOnKick = false;
         let kickMessage;
         if (configuredServers.indexOf(message.guild.id) != -1) {
             for (let i = 0; i < config.servers.length; i++) {
@@ -92,8 +89,7 @@ client.on('message', message => {
                             reason: `Global kick requested by ${message.author.tag}`
                         })
                         .then(() => {
-                            if (serverConfig.globalKickReply && !messageOnKick && !kickMessage) {
-                                messageOnKick = true;
+                            if (serverConfig.globalKickReply && !kickMessage) {
                                 kickMessage = serverConfig.globalKickReply;
                             }
                             message.author.send(`Successfully kicked ${user.tag} from ${server.name}`);
@@ -113,7 +109,7 @@ client.on('message', message => {
                 console.log(`${message.author.tag} does not have permission to ban members on server ${server.name}`);
             }
         });
-        if (messageOnKick && kickMessage) { 
+        if (kickMessage) { 
             message.mentions.users.first().send(kickMessage);
         }
         message.delete();
