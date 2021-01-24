@@ -124,8 +124,13 @@ client.on('message', message => {
                     if (member.voice.serverMute == false) {
                         member.voice.setMute(true, `Server mute requested by ${message.author.tag}`);
                     }
-                    if (server.roles.resolve('Muted') && member.roles.cache.has('Muted') == false) {
-                        member.roles.add('Muted', `Server mute requested by ${message.author.tag}`);
+                    if (member.roles.cache.has('Muted') == false) {
+                        let mutedRole = server.roles.resolve('Muted');
+                        if (mutedRole) {
+                            member.roles.add(mutedRole, `Server mute requested by ${message.author.tag}`);
+                        } else {
+                            console.log(`Unable to resolve Muted role on ${server.name}`)
+                        }
                     }
                     message.author.send(`Successfully server muted ${user.tag} on ${server.name}`);
                 } else {
@@ -149,8 +154,13 @@ client.on('message', message => {
                     if (member.voice.serverMute == true) {
                         member.voice.setMute(false, `Server unmute requested by ${message.author.tag}`);
                     }
-                    if (server.roles.resolve('Muted') && member.roles.cache.has('Muted') == true) {
-                        member.roles.remove('Muted', `Server unmute requested by ${message.author.tag}`);
+                    if (member.roles.cache.has('Muted') == true) {
+                        let mutedRole = server.roles.resolve('Muted');
+                        if (mutedRole) {
+                            member.roles.remove(mutedRole, `Server unmute requested by ${message.author.tag}`);
+                        } else {
+                            console.log(`Unable to resolve Muted role on ${server.name}`)
+                        }
                     }
                     message.author.send(`Successfully server unmuted ${user.tag} on ${server.name}`);
                 } else {
