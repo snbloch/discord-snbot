@@ -124,6 +124,7 @@ client.on('message', message => {
                     if (member.voice.serverMute == false) {
                         member.voice.setMute(true, `Server mute requested by ${message.author.tag}`);
                     }
+                    /*
                     if (member.roles.cache.has('Muted') == false) {
                         let mutedRole = server.roles.resolve('Muted');
                         if (mutedRole) {
@@ -132,6 +133,7 @@ client.on('message', message => {
                             console.log(`Unable to resolve Muted role on ${server.name}`)
                         }
                     }
+                    */
                     message.author.send(`Successfully server muted ${user.tag} on ${server.name}`);
                 } else {
                     console.log(`${user} is not a member of server ${server.name}`);
@@ -154,6 +156,7 @@ client.on('message', message => {
                     if (member.voice.serverMute == true) {
                         member.voice.setMute(false, `Server unmute requested by ${message.author.tag}`);
                     }
+                    /*
                     if (member.roles.cache.has('Muted') == true) {
                         let mutedRole = server.roles.resolve('Muted');
                         if (mutedRole) {
@@ -162,6 +165,7 @@ client.on('message', message => {
                             console.log(`Unable to resolve Muted role on ${server.name}`)
                         }
                     }
+                    */
                     message.author.send(`Successfully server unmuted ${user.tag} on ${server.name}`);
                 } else {
                     console.log(`${user} is not a member of server ${server.name}`);
