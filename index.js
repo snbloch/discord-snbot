@@ -114,6 +114,56 @@ client.on('message', message => {
         }
         message.delete();
     }
+    else if (message.content.startsWith('!mute ')) {
+        let server = message.guild;
+        if (server.member(message.author) && server.member(message.author).permissions.any(['MUTE_MEMBERS'])) {
+            let user = message.mentions.users.first();
+            if (user) {
+                let member = server.member(user);
+                if (member) {
+                    if (member.voice.serverMute == false) {
+                        member.voice.setMute(true, `Server mute requested by ${message.author.tag}`);
+                    }
+                    if (server.roles.resolve('Muted') && member.roles.cache.has('Muted') == false) {
+                        member.roles.add('Muted', `Server mute requested by ${message.author.tag}`);
+                    }
+                    message.author.send(`Successfully server muted ${user.tag} on ${server.name}`);
+                } else {
+                    console.log(`${user} is not a member of server ${server.name}`);
+                }
+            } else {
+                message.author.send(`You didn't @mention the user to mute.`);
+            }
+        } else {
+            console.log(`${message.author.tag} does not have permission to mute members on server ${server.name}`);
+        }
+        message.delete();
+    }
+    else if (message.content.startsWith('!unmute ')) {
+        let server = message.guild;
+        if (server.member(message.author) && server.member(message.author).permissions.any(['MUTE_MEMBERS'])) {
+            let user = message.mentions.users.first();
+            if (user) {
+                let member = server.member(user);
+                if (member) {
+                    if (member.voice.serverMute == true) {
+                        member.voice.setMute(false, `Server unmute requested by ${message.author.tag}`);
+                    }
+                    if (server.roles.resolve('Muted') && member.roles.cache.has('Muted') == true) {
+                        member.roles.remove('Muted', `Server unmute requested by ${message.author.tag}`);
+                    }
+                    message.author.send(`Successfully server unmuted ${user.tag} on ${server.name}`);
+                } else {
+                    console.log(`${user} is not a member of server ${server.name}`);
+                }
+            } else {
+                message.author.send(`You didn't @mention the user to mute.`);
+            }
+        } else {
+            console.log(`${message.author.tag} does not have permission to unmute members on server ${server.name}`);
+        }
+        message.delete();
+    }
     else if (configuredServers.indexOf(message.guild.id) != -1) {
         for (let i = 0; i < config.servers.length; i++) {
             if (config.servers[i].id === message.guild.id) {
