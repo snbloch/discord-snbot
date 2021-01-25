@@ -122,19 +122,16 @@ client.on('message', message => {
                 let member = server.member(user);
                 if (member) {
                     if (member.voice.serverMute == false) {
-                        console.log(server.me.permissions);
                         member.voice.setMute(true, `Server mute requested by ${message.author.tag}`);
                     }
-                    /*
-                    if (member.roles.cache.has('Muted') == false) {
-                        let mutedRole = server.roles.resolve('Muted');
+                    if (!member.roles.cache.find(role => role.name === 'Muted')) {
+                        let mutedRole = server.roles.cache.find(role => role.name === 'Muted');
                         if (mutedRole) {
                             member.roles.add(mutedRole, `Server mute requested by ${message.author.tag}`);
                         } else {
                             console.log(`Unable to resolve Muted role on ${server.name}`)
                         }
                     }
-                    */
                     message.author.send(`Successfully server muted ${user.tag} on ${server.name}`);
                 } else {
                     console.log(`${user} is not a member of server ${server.name}`);
@@ -157,16 +154,14 @@ client.on('message', message => {
                     if (member.voice.serverMute == true) {
                         member.voice.setMute(false, `Server unmute requested by ${message.author.tag}`);
                     }
-                    /*
-                    if (member.roles.cache.has('Muted') == true) {
-                        let mutedRole = server.roles.resolve('Muted');
+                    if (member.roles.cache.find(role => role.name === 'Muted')) {
+                        let mutedRole = server.roles.cache.find(role => role.name === 'Muted');
                         if (mutedRole) {
                             member.roles.remove(mutedRole, `Server unmute requested by ${message.author.tag}`);
                         } else {
                             console.log(`Unable to resolve Muted role on ${server.name}`)
                         }
                     }
-                    */
                     message.author.send(`Successfully server unmuted ${user.tag} on ${server.name}`);
                 } else {
                     console.log(`${user} is not a member of server ${server.name}`);
