@@ -116,7 +116,7 @@ client.on('message', message => {
     }
     else if (message.content.startsWith('!mute ')) {
         let server = message.guild;
-        if (server.member(message.author) && server.member(message.author).permissions.any(['MUTE_MEMBERS'])) {
+        if (server.member(message.author) && server.channels.cache.find(channel => channel.name === 'Freestyle').permissionsFor(message.author).any(['MUTE_MEMBERS'])) {
             let user = message.mentions.users.first();
             if (user) {
                 let member = server.member(user);
@@ -146,7 +146,7 @@ client.on('message', message => {
     }
     else if (message.content.startsWith('!unmute ')) {
         let server = message.guild;
-        if (server.member(message.author) && server.member(message.author).permissions.any(['MUTE_MEMBERS'])) {
+        if (server.member(message.author) && server.channels.cache.find(channel => channel.name === 'Freestyle').permissionsFor(message.author).any(['MUTE_MEMBERS'])) {
             let user = message.mentions.users.first();
             if (user) {
                 let member = server.member(user);
