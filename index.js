@@ -122,7 +122,8 @@ client.on('message', message => {
                 let member = server.member(user);
                 if (member) {
                     if (member.voice.serverMute == false) {
-                        member.edit({mute: true}, `Server mute requested by ${message.author.tag}`);
+                        console.log(server.me.permissions);
+                        member.voice.setMute(true, `Server mute requested by ${message.author.tag}`);
                     }
                     /*
                     if (member.roles.cache.has('Muted') == false) {
@@ -154,7 +155,7 @@ client.on('message', message => {
                 let member = server.member(user);
                 if (member) {
                     if (member.voice.serverMute == true) {
-                        member.edit({mute: false}, `Server unmute requested by ${message.author.tag}`);
+                        member.voice.setMute(false, `Server unmute requested by ${message.author.tag}`);
                     }
                     /*
                     if (member.roles.cache.has('Muted') == true) {
