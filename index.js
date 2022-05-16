@@ -174,6 +174,13 @@ client.on('message', message => {
         }
         message.delete();
     }
+    else if (message.content.toLowerCase.includes('snbot')) {
+        message.guild.emojis.cache.forEach(emoji => {
+            if (emoji.name === 'pug') {
+                message.react(emoji);
+            }
+        });
+    }
     else if (configuredServers.indexOf(message.guild.id) != -1) {
         for (let i = 0; i < config.servers.length; i++) {
             if (config.servers[i].id === message.guild.id) {
