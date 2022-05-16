@@ -174,7 +174,7 @@ client.on('message', message => {
         }
         message.delete();
     }
-    else if (message.content.toLowerCase.includes('snbot')) {
+    else if (message.content.toLowerCase().includes('snbot')) {
         message.guild.emojis.cache.forEach(emoji => {
             if (emoji.name === 'pug') {
                 message.react(emoji);
