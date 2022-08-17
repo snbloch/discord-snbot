@@ -177,7 +177,10 @@ client.on('message', message => {
     else if (message.content.toLowerCase().includes('snbot')) {
         message.guild.emojis.cache.forEach(emoji => {
             if (emoji.name === 'pug') {
-                message.react(emoji);
+                message.react(emoji)
+                .catch(err => {
+                    console.error(err);
+                });
             }
         });
     }
